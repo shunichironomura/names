@@ -205,7 +205,18 @@ adding `names` to your dependencies in your project's `Cargo.toml` file:
 
 ```toml
 [dependencies]
-names = { version = "0.14.0", default-features = false }
+names = { version = "0.14.1-dev", default-features = false }
+```
+
+For browser or Node.js builds targeting `wasm32-unknown-unknown`, also enable
+the `wasm_js` feature. This selects JavaScript randomness via `getrandom`.
+Native builds do not need this feature. This fork requires Rust 1.85 or later.
+
+To use this fork directly, replace the version with a Git dependency:
+
+```toml
+[dependencies]
+names = { git = "https://github.com/shunichironomura/names", rev = "<commit SHA>", default-features = false, features = ["wasm_js"] }
 ```
 
 ### Examples

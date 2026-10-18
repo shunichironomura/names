@@ -12,8 +12,13 @@
 //!
 //! ```toml
 //! [dependencies]
-//! names = { version = "0.14.0", default-features = false }
+//! names = { version = "0.14.1-dev", default-features = false }
 //! ```
+//!
+//! For browser or Node.js builds targeting `wasm32-unknown-unknown`, also enable
+//! the `wasm_js` feature. This selects JavaScript randomness via `getrandom`.
+//! Native builds do not need this feature. This fork requires Rust 1.85 or later.
+//!
 //! ## Examples
 //!
 //! ### Example: painless defaults
@@ -59,7 +64,7 @@
 #![doc(html_root_url = "https://docs.rs/names/0.14.1-dev")]
 #![deny(missing_docs)]
 
-use rand::{rngs::ThreadRng, seq::SliceRandom, Rng};
+use rand::{rngs::ThreadRng, seq::IndexedRandom, RngExt};
 
 /// List of English adjective words
 pub const ADJECTIVES: &[&str] = &include!(concat!(env!("OUT_DIR"), "/adjectives.rs"));
@@ -68,18 +73,14 @@ pub const ADJECTIVES: &[&str] = &include!(concat!(env!("OUT_DIR"), "/adjectives.
 pub const NOUNS: &[&str] = &include!(concat!(env!("OUT_DIR"), "/nouns.rs"));
 
 /// A naming strategy for the `Generator`
+#[derive(Default)]
 pub enum Name {
     /// This represents a plain naming strategy of the form `"ADJECTIVE-NOUN"`
+    #[default]
     Plain,
     /// This represents a naming strategy with a random number appended to the
     /// end, of the form `"ADJECTIVE-NOUN-NUMBER"`
     Numbered,
-}
-
-impl Default for Name {
-    fn default() -> Self {
-        Name::Plain
-    }
 }
 
 /// A random name generator which combines an adjective, a noun, and an
@@ -115,7 +116,7 @@ impl<'a> Generator<'a> {
             adjectives,
             nouns,
             naming,
-            rng: ThreadRng::default(),
+            rng: rand::rng(),
         }
     }
 
@@ -155,5 +156,5 @@ impl<'a> Iterator for Generator<'a> {
 }
 
 fn rand_num(rng: &mut ThreadRng) -> u16 {
-    rng.gen_range(1..10000)
+    rng.random_range(1..10000)
 }
