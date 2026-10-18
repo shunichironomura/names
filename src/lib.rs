@@ -12,7 +12,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! names = { version = "0.14.1-dev", default-features = false }
+//! names = { version = "0.15.0", default-features = false }
 //! ```
 //!
 //! For browser or Node.js builds targeting `wasm32-unknown-unknown`, also enable
@@ -61,7 +61,7 @@
 //! assert_eq!("imaginary-roll", generator.next().unwrap());
 //! ```
 
-#![doc(html_root_url = "https://docs.rs/names/0.14.1-dev")]
+#![doc(html_root_url = "https://docs.rs/names/0.15.0")]
 #![deny(missing_docs)]
 
 use rand::{RngExt, rngs::ThreadRng, seq::IndexedRandom};
