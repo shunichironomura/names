@@ -3,6 +3,7 @@ name = "names"
 version = "0.14.1-dev"
 authors = ["Fletcher Nichol <fnichol@nichol.ca>"]
 edition = "2018"
+rust-version = "1.85"
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/fnichol/names"
@@ -15,6 +16,11 @@ A random name generator with names suitable for use in container
 instances, project names, application instances, etc.
 """
 
+[[bin]]
+name = "names"
+path = "src/bin/names.rs"
+required-features = ["application"]
+
 [features]
 default = ["application"]
 
@@ -22,13 +28,18 @@ default = ["application"]
 # names as a library. For example, to use as a library in a Cargo.toml:
 # `names = { version = "...", default-features = false }`
 application = ["clap"]
+# Enable JavaScript randomness when building for a browser or Node.js.
+wasm_js = ["dep:getrandom"]
 
 [dependencies]
 clap = { version = "3.1.5", optional = true, features = ["derive"] }
-rand = "0.8.4"
+rand = "0.10"
 
 [dev-dependencies]
 version-sync = "0.9.1"
+
+[target.'cfg(all(target_arch = "wasm32", target_os = "unknown"))'.dependencies]
+getrandom = { version = "0.4", features = ["wasm_js"], optional = true }
 
 [package.metadata.docs.rs]
 no-default-features = true

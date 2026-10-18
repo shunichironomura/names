@@ -24,7 +24,7 @@ fn generate(src_path: impl AsRef<Path>, dst_path: impl AsRef<Path>) -> io::Resul
 
     writeln!(dst, "[")?;
     for word in src.lines() {
-        writeln!(dst, "\"{}\",", &word.unwrap())?;
+        writeln!(dst, "\"{}\",", word.unwrap())?;
     }
     writeln!(dst, "]")
 }

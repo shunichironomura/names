@@ -182,7 +182,7 @@ anchors:
 #
 env:
   RUST_VERSION: stable
-  MIN_SUPPORTED_RUST_VERSION: 1.54.0 # Due to clap v3
+  MIN_SUPPORTED_RUST_VERSION: 1.85.0 # Due to rand v0.10
 
 check_task:
   name: check
