@@ -204,7 +204,7 @@ adding `names` to your dependencies in your project's `Cargo.toml` file:
 
 ```toml
 [dependencies]
-names = { version = "0.14.1-dev", default-features = false }
+names = { version = "0.15.0", default-features = false }
 ```
 
 For browser or Node.js builds targeting `wasm32-unknown-unknown`, also enable

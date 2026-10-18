@@ -4,6 +4,30 @@
 
 ## [Unreleased] - ReleaseDate
 
+## [0.15.0] - 2026-10-18
+
+First release maintained in the shunichironomura/names fork.
+
+### Changed
+
+- **(breaking):** require Rust 1.85 or later and adopt the Rust 2024 edition.
+- Upgrade `rand` to 0.10 and `clap` to 4.
+- Refresh dependencies to resolve security advisories and unmaintained dependencies.
+- Replace Cirrus CI, Bors, and cargo-make with GitHub Actions and just.
+- Pin the development toolchain to Rust 1.99.0 and add Renovate maintenance.
+
+### Added
+
+- Opt-in `wasm_js` feature for JavaScript randomness on browser and Node.js targets.
+- CLI regression tests and library generation tests.
+- CI checks for Linux, macOS, Windows, MSRV/features, browser/WASI compilation,
+  coverage, dependency auditing, and workflow linting.
+
+### Removed
+
+- Legacy upstream release automation. This fork does not automatically publish
+  crates, binary artifacts, or Docker images.
+
 ## [0.14.0] - 2022-06-28
 
 ### Changed
@@ -76,7 +100,9 @@ The initial release.
 
 <!-- next-url -->
 
-[unreleased]: https://github.com/fnichol/names/compare/v0.14.0...HEAD
+[unreleased]: https://github.com/shunichironomura/names/compare/v0.15.0...HEAD
+
+[0.15.0]: https://github.com/shunichironomura/names/tree/v0.15.0
 
 [0.14.0]: https://github.com/fnichol/names/compare/v0.13.0...v0.14.0
 
