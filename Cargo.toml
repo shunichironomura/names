@@ -1,7 +1,10 @@
 [package]
 name = "names"
 version = "0.15.0"
-authors = ["Fletcher Nichol <fnichol@nichol.ca>"]
+authors = [
+    "Fletcher Nichol <fnichol@nichol.ca>",
+    "Shunichiro Nomura <nomura@space.t.u-tokyo.ac.jp>",
+]
 edition = "2024"
 rust-version = "1.85"
 license = "MIT"
