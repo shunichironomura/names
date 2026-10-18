@@ -8,9 +8,14 @@
   Random name generator for Rust
 </h4>
 
+Maintained fork of [fnichol/names](https://github.com/fnichol/names).
+This fork uses Rust 2024 with an MSRV of 1.85. Published crates, pre-built
+binaries, installers, and Docker images linked below are upstream artifacts;
+use the Git dependency or build this fork from source for its changes.
+
 |                  |                                                                                          |
 | ---------------: | ---------------------------------------------------------------------------------------- |
-|               CI | [![CI Status][badge-ci-overall]][ci]<br /> [![Bors enabled][badge-bors]][bors-dashboard] |
+|               CI | [![CI Status][badge-ci-overall]][ci] |
 |   Latest Version | [![Latest version][badge-version]][crate]                                                |
 |    Documentation | [![Documentation][badge-docs]][docs]                                                     |
 |  Crate Downloads | [![Crate downloads][badge-crate-dl]][crate]                                              |
@@ -27,7 +32,7 @@
   - [Usage](#usage)
   - [Installation](#installation)
     - [install.sh (Pre-Built Binaries)](#installsh-pre-built-binaries)
-    - [GitHub Releasees (Pre-Built Binaries)](#github-releasees-pre-built-binaries)
+    - [GitHub Releases (Pre-Built Binaries)](#github-releases-pre-built-binaries)
     - [Docker Image](#docker-image)
     - [Cargo Install](#cargo-install)
     - [From Source](#from-source)
@@ -37,9 +42,7 @@
     - [Example: painless defaults](#example-painless-defaults)
     - [Example: with custom dictionaries](#example-with-custom-dictionaries)
 - [CI Status](#ci-status)
-  - [Build (main branch)](#build-main-branch)
-  - [Test (main branch)](#test-main-branch)
-  - [Check (main branch)](#check-main-branch)
+- [Development](#development)
 - [Code of Conduct](#code-of-conduct)
 - [Issues](#issues)
 - [Contributing](#contributing)
@@ -93,21 +96,17 @@ If you're ever confused, at least there's help:
 
 ```console
 > names --help
-names 0.11.0
-Fletcher Nichol <fnichol@nichol.ca>
-
 A random name generator with results like "delirious-pail"
 
-USAGE:
-    names [FLAGS] [AMOUNT]
+Usage: names [OPTIONS] [AMOUNT]
 
-ARGS:
-    <AMOUNT>    Number of names to generate [default: 1]
+Arguments:
+  [AMOUNT]  Number of names to generate [default: 1]
 
-FLAGS:
-    -h, --help       Prints help information
-    -n, --number     Adds a random number to the name(s)
-    -V, --version    Prints version information
+Options:
+  -n, --number   Adds a random number to the name(s)
+  -h, --help     Print help
+  -V, --version  Print version
 ```
 
 ### Installation
@@ -147,7 +146,7 @@ For a full set of options, check out the help usage with:
 curl -sSf https://fnichol.github.io/names/install.sh | sh -s -- --help
 ```
 
-#### GitHub Releasees (Pre-Built Binaries)
+#### GitHub Releases (Pre-Built Binaries)
 
 Each release comes with binary artifacts published in [GitHub
 Releases][github-releases]. The `install.sh` program downloads its artifacts
@@ -182,7 +181,7 @@ the latest commit on the main branch, which may not correspond to the latest
 stable release:
 
 ```console
-> git clone https://github.com/fnichol/names.git
+> git clone https://github.com/shunichironomura/names.git
 > cd names
 > cargo build --release
 > cp ./target/release/names /dest/path/
@@ -263,39 +262,52 @@ assert_eq!("imaginary-roll", generator.next().unwrap());
 
 ## CI Status
 
-### Build (main branch)
+[GitHub Actions][ci] runs on pull requests and pushes to `main`:
 
-| Operating System | Target                        | Stable Rust                                                                     |
-| ---------------: | ----------------------------- | ------------------------------------------------------------------------------- |
-|          FreeBSD | `x86_64-unknown-freebsd`      | [![FreeBSD Build Status][badge-ci-build-x86_64-unknown-freebsd]][ci-staging]    |
-|            Linux | `arm-unknown-linux-gnueabihf` | [![Linux Build Status][badge-ci-build-arm-unknown-linux-gnueabihf]][ci-staging] |
-|            Linux | `aarch64-unknown-linux-gnu`   | [![Linux Build Status][badge-ci-build-aarch64-unknown-linux-gnu]][ci-staging]   |
-|            Linux | `i686-unknown-linux-gnu`      | [![Linux Build Status][badge-ci-build-i686-unknown-linux-gnu]][ci-staging]      |
-|            Linux | `i686-unknown-linux-musl`     | [![Linux Build Status][badge-ci-build-i686-unknown-linux-musl]][ci-staging]     |
-|            Linux | `x86_64-unknown-linux-gnu`    | [![Linux Build Status][badge-ci-build-x86_64-unknown-linux-gnu]][ci-staging]    |
-|            Linux | `x86_64-unknown-linux-musl`   | [![Linux Build Status][badge-ci-build-x86_64-unknown-linux-musl]][ci-staging]   |
-|            macOS | `x86_64-apple-darwin`         | [![macOS Build Status][badge-ci-build-x86_64-apple-darwin]][ci-staging]         |
-|          Windows | `x86_64-pc-windows-msvc`      | [![Windows Build Status][badge-ci-build-x86_64-pc-windows-msvc]][ci-staging]    |
+- Formatting, Clippy, and documentation with warnings denied.
+- Default, library-only, and all-feature tests on Linux, macOS, and Windows,
+  including doctests.
+- Every feature on the MSRV declared in `Cargo.toml`.
+- Browser/Node.js and WASI library compilation.
+- LLVM coverage, uploaded as the `coverage-lcov` workflow artifact (no secrets needed).
+- Dependency auditing, actionlint, and zizmor workflow security checks.
 
-### Test (main branch)
+The **CI gate** job aggregates all results for branch protection. FreeBSD and
+the old upstream release-target matrix are not currently tested by this fork.
 
-| Operating System | Stable Rust                                                               | Nightly Rust                                                                |
-| ---------------: | ------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-|          FreeBSD | [![FreeBSD Stable Test Status][badge-ci-test-stable-freebsd]][ci-staging] | [![FreeBSD Nightly Test Status][badge-ci-test-nightly-freebsd]][ci-staging] |
-|            Linux | [![Linux Stable Test Status][badge-ci-test-stable-linux]][ci-staging]     | [![Linux Nightly Test Status][badge-ci-test-nightly-linux]][ci-staging]     |
-|            macOS | [![macOS Stable Test Status][badge-ci-test-stable-macos]][ci-staging]     | [![macOS Nightly Test Status][badge-ci-test-nightly-macos]][ci-staging]     |
-|          Windows | [![Windows Stable Test Status][badge-ci-test-stable-windows]][ci-staging] | [![Windows Nightly Test Status][badge-ci-test-nightly-windows]][ci-staging] |
+## Development
 
-**Note**: The
-[Minimum Supported Rust Version (MSRV)](https://github.com/rust-lang/rfcs/pull/2495)
-is also tested and can be viewed in the [CI dashboard][ci-staging].
+Install [Rust via rustup](https://rustup.rs/); `rust-toolchain.toml` pins the
+development toolchain independently of the MSRV. CI and local commands use the
+committed lockfile. Renovate maintains dependencies, action digests, the
+toolchain, and the lockfile.
 
-### Check (main branch)
+Install [just](https://just.systems/) and the optional Rust tools:
 
-|        | Status                                                |
-| ------ | ----------------------------------------------------- |
-| Lint   | [![Lint Status][badge-ci-check-lint]][ci-staging]     |
-| Format | [![Format Status][badge-ci-check-format]][ci-staging] |
+```sh
+cargo install --locked just cargo-hack cargo-audit cargo-llvm-cov
+```
+
+For workflow checks, also install [actionlint](https://github.com/rhysd/actionlint)
+and [zizmor](https://docs.zizmor.sh/installation/).
+
+```sh
+just lint       # Formatting, Clippy, and docs
+just test       # Default, library-only, and all-feature tests
+just msrv       # Check every feature on Cargo.toml's rust-version
+just wasm       # Install Wasm targets and check browser/Node.js and WASI
+just audit      # RustSec audit, including warnings
+just workflows # actionlint and zizmor
+just check      # All of the above
+just coverage   # Local HTML coverage report
+```
+
+The recipes are convenience wrappers; Cargo commands can also be run directly
+(on Windows, use `just --show <recipe>` to see them). Coverage recipes require
+`llvm-tools-preview`, installable with `rustup component add llvm-tools-preview`.
+
+The legacy Cirrus, Bors, and cargo-make setup has been retired. This fork does
+not automatically publish crates, GitHub release artifacts, or Docker images.
 
 ## Code of Conduct
 
@@ -325,7 +337,8 @@ See the [changelog] for a full release history.
 
 ## Authors
 
-Created and maintained by [Fletcher Nichol][fnichol] (<fnichol@nichol.ca>).
+Created by [Fletcher Nichol][fnichol] (<fnichol@nichol.ca>).
+This fork is maintained by [Shunichiro Nomura](https://github.com/shunichironomura).
 
 ## License
 
@@ -335,47 +348,7 @@ Unless you explicitly state otherwise, any contribution intentionally submitted
 for inclusion in the work by you, as defined in the MIT license, shall be
 licensed as above, without any additional terms or conditions.
 
-[badge-bors]: https://bors.tech/images/badge_small.svg
-[badge-ci-build-x86_64-unknown-freebsd]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=build-bin-names-x86_64-unknown-freebsd.tar.gz
-[badge-ci-build-arm-unknown-linux-gnueabihf]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=build-bin-names-arm-unknown-linux-gnueabihf.tar.gz
-[badge-ci-build-aarch64-unknown-linux-gnu]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=build-bin-names-aarch64-unknown-linux-gnu.tar.gz
-[badge-ci-build-i686-unknown-linux-gnu]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=build-bin-names-i686-unknown-linux-gnu.tar.gz
-[badge-ci-build-i686-unknown-linux-musl]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=build-bin-names-i686-unknown-linux-musl.tar.gz
-[badge-ci-build-x86_64-unknown-linux-gnu]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=build-bin-names-x86_64-unknown-linux-gnu.tar.gz
-[badge-ci-build-x86_64-unknown-linux-musl]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=build-bin-names-x86_64-unknown-linux-musl.tar.gz
-[badge-ci-build-x86_64-apple-darwin]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=build-bin-names-x86_64-apple-darwin.zip
-[badge-ci-build-x86_64-pc-windows-msvc]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=build-bin-names-x86_64-pc-windows-msvc.zip
-[badge-ci-check-format]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=check&script=format
-[badge-ci-check-lint]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=check&script=lint
-[badge-ci-overall]:
-  https://img.shields.io/cirrus/github/fnichol/names/main?style=flat-square
-[badge-ci-test-nightly-freebsd]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=test-nightly-x86_64-unknown-freebsd
-[badge-ci-test-nightly-linux]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=test-nightly-x86_64-unknown-linux-gnu
-[badge-ci-test-nightly-macos]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=test-nightly-x86_64-apple-darwin
-[badge-ci-test-nightly-windows]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=test-nightly-x86_64-pc-windows-msvc
-[badge-ci-test-stable-freebsd]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=test-stable-x86_64-unknown-freebsd
-[badge-ci-test-stable-linux]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=test-stable-x86_64-unknown-linux-gnu
-[badge-ci-test-stable-macos]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=test-stable-x86_64-apple-darwin
-[badge-ci-test-stable-windows]:
-  https://img.shields.io/cirrus/github/fnichol/names/staging?style=flat-square&task=test-stable-x86_64-pc-windows-msvc
+[badge-ci-overall]: https://github.com/shunichironomura/names/actions/workflows/ci.yaml/badge.svg
 [badge-crate-dl]: https://img.shields.io/crates/d/names.svg?style=flat-square
 [badge-docker-pulls]:
   https://img.shields.io/docker/pulls/fnichol/names.svg?style=flat-square
@@ -384,18 +357,16 @@ licensed as above, without any additional terms or conditions.
   https://img.shields.io/github/downloads/fnichol/names/total.svg
 [badge-license]: https://img.shields.io/crates/l/names.svg?style=flat-square
 [badge-version]: https://img.shields.io/crates/v/names.svg?style=flat-square
-[bors-dashboard]: https://app.bors.tech/repositories/37173
-[changelog]: https://github.com/fnichol/names/blob/main/CHANGELOG.md
-[ci]: https://cirrus-ci.com/github/fnichol/names
-[ci-staging]: https://cirrus-ci.com/github/fnichol/names/staging
-[code-of-conduct]: https://github.com/fnichol/names/blob/main/CODE_OF_CONDUCT.md
+[changelog]: CHANGELOG.md
+[ci]: https://github.com/shunichironomura/names/actions/workflows/ci.yaml
+[code-of-conduct]: CODE_OF_CONDUCT.md
 [commonmark]: https://commonmark.org/
 [crate]: https://crates.io/crates/names
 [docker]: https://hub.docker.com/r/fnichol/names
 [docs]: https://docs.rs/names
 [fnichol]: https://github.com/fnichol
-[github]: https://github.com/fnichol/names
+[github]: https://github.com/shunichironomura/names
 [github-releases]: https://github.com/fnichol/names/releases
-[issues]: https://github.com/fnichol/names/issues
-[license]: https://github.com/fnichol/names/blob/main/LICENSE.txt
+[issues]: https://github.com/shunichironomura/names/issues
+[license]: LICENSE.txt
 [nightly]: https://github.com/fnichol/names/releases/tag/nightly

@@ -1,0 +1,19 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["config:best-practices", "helpers:pinGitHubActionDigestsToSemver"],
+  minimumReleaseAge: "7 days",
+  lockFileMaintenance: {
+    enabled: true,
+  },
+  packageRules: [
+    {
+      matchManagers: ["rust-toolchain"],
+      matchDepTypes: ["toolchain"],
+      addLabels: ["rust", "ci"],
+    },
+    {
+      matchUpdateTypes: ["lockFileMaintenance"],
+      minimumReleaseAge: null,
+    },
+  ],
+}

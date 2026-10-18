@@ -1,12 +1,14 @@
-use names::{Generator, Name, ADJECTIVES, NOUNS};
+use names::{ADJECTIVES, Generator, NOUNS, Name};
 
 #[test]
 fn plain_names_use_the_supplied_dictionaries() {
     let mut generator = Generator::new(&["imaginary"], &["roll"], Name::Plain);
-    assert!(generator
-        .by_ref()
-        .take(100)
-        .all(|name| name == "imaginary-roll"));
+    assert!(
+        generator
+            .by_ref()
+            .take(100)
+            .all(|name| name == "imaginary-roll")
+    );
 }
 
 #[test]

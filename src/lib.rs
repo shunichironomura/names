@@ -64,7 +64,7 @@
 #![doc(html_root_url = "https://docs.rs/names/0.14.1-dev")]
 #![deny(missing_docs)]
 
-use rand::{rngs::ThreadRng, seq::IndexedRandom, RngExt};
+use rand::{RngExt, rngs::ThreadRng, seq::IndexedRandom};
 
 /// List of English adjective words
 pub const ADJECTIVES: &[&str] = &include!(concat!(env!("OUT_DIR"), "/adjectives.rs"));
