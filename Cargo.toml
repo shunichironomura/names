@@ -2,13 +2,13 @@
 name = "names"
 version = "0.14.1-dev"
 authors = ["Fletcher Nichol <fnichol@nichol.ca>"]
-edition = "2018"
+edition = "2024"
 rust-version = "1.85"
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/fnichol/names"
+repository = "https://github.com/shunichironomura/names"
 documentation = "https://docs.rs/names"
-homepage = "https://github.com/fnichol/names"
+homepage = "https://github.com/shunichironomura/names"
 keywords = ["name", "random"]
 categories = ["command-line-utilities"]
 description = """
@@ -30,13 +30,14 @@ default = ["application"]
 application = ["clap"]
 # Enable JavaScript randomness when building for a browser or Node.js.
 wasm_js = ["dep:getrandom"]
+clap = ["dep:clap"]
 
 [dependencies]
-clap = { version = "3.1.5", optional = true, features = ["derive"] }
+clap = { version = "4.6.7", optional = true, features = ["derive"] }
 rand = "0.10"
 
 [dev-dependencies]
-version-sync = "0.9.1"
+version-sync = "0.9.5"
 
 [target.'cfg(all(target_arch = "wasm32", target_os = "unknown"))'.dependencies]
 getrandom = { version = "0.4", features = ["wasm_js"], optional = true }

@@ -21,14 +21,14 @@ mod cli {
 
     /// A random name generator with results like "delirious-pail"
     #[derive(Parser, Debug)]
-    #[clap(author = AUTHOR, version = VERSION)]
+    #[command(author = AUTHOR, version = VERSION)]
     pub(crate) struct Args {
         /// Adds a random number to the name(s)
-        #[clap(short, long)]
+        #[arg(short, long)]
         pub(crate) number: bool,
 
         /// Number of names to generate
-        #[clap(default_value = "1", rename_all = "screaming_snake_case")]
+        #[arg(default_value_t = 1, value_name = "AMOUNT")]
         pub(crate) amount: usize,
     }
 
